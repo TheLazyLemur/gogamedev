@@ -11,17 +11,41 @@ import (
 type Node struct {
 	name  string
 	pos   rl.Vector2
+	size  rl.Vector2
 	edges map[*Node]struct{}
+}
+
+func GetName(n *Node) string {
+	return n.name
 }
 
 func GetNodePos(n *Node) rl.Vector2 {
 	return n.pos
 }
 
-func CreateNode(name string, pos rl.Vector2) *Node {
+func GetNodeSize(n *Node) rl.Vector2 {
+	return n.size
+}
+
+func GetEdges(n *Node) []*Node {
+	ret := make([]*Node, 0)
+
+	for n := range n.edges {
+		ret = append(ret, n)
+	}
+
+	sort.Slice(ret, func(i, j int) bool {
+		return ret[i].name < ret[j].name
+	})
+
+	return ret
+}
+
+func CreateNode(name string, pos rl.Vector2, size rl.Vector2) *Node {
 	return &Node{
 		name:  name,
 		pos:   pos,
+		size:  size,
 		edges: make(map[*Node]struct{}),
 	}
 }
@@ -123,7 +147,7 @@ func addEdgeToNode(g *Graph, n *Node, ns ...*Node) error {
 }
 
 func PrintGraph(g *Graph) {
-	for n := range g.nodes {
+	for _, n := range GetNodes(g) {
 		edgeNames := make([]string, 0)
 
 		for e := range n.edges {
