@@ -2,7 +2,10 @@ module gamedev
 
 go 1.22.3
 
-require github.com/gen2brain/raylib-go/raylib v0.0.0-20240807111636-8861ee437da9
+require (
+	github.com/gen2brain/raylib-go/raygui v0.0.0-20240807111636-8861ee437da9
+	github.com/gen2brain/raylib-go/raylib v0.0.0-20240807111636-8861ee437da9
+)
 
 require (
 	github.com/ebitengine/purego v0.7.1 // indirect
